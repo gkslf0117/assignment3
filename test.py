@@ -36,3 +36,28 @@ def run_verification():
     options = Marabou.createOptions(verbosity=0)
     exitCode, vals, stats = network.solve(options=options)
 
+    # 6. 결과 해석
+    if exitCode == "sat": # 또는 len(vals) > 0
+        print("\n=== Result: SAT ===")
+        print("A counterexample was found. The network is NOT robust.")
+        # 첫 5개 픽셀의 값 출력
+        example_input = [vals.get(input_vars[i].item(), "N/A") for i in range(5)]
+        print(f"Counterexample first 5 pixels: {example_input}")
+    elif exitCode == "unsat":
+        print("\n=== Result: UNSAT ===")
+        print("Property verified. The network is robust.")
+    else:
+        print(f"\n=== Result: {exitCode} ===")
+        print("Verification ended with a non-standard status.")
+    
+    print("\nVerification Statistics:")
+    if stats:
+        # 시간 단위가 버전마다 다를 수 있어 안전하게 출력
+        try:
+            print(f"Total time (s): {stats.getTotalTimeInMicroseconds() / 1000000:.4f}")
+        except:
+            print("Statistics retrieved, but time format is different.")
+
+if __name__ == "__main__":
+    run_verification()
+
