@@ -29,4 +29,31 @@ pip install -r requirements.txt
 
 
 
+4. How to Run
+Step 1: 먼저 검증에 사용할 외부 모델을 생성합니다.
+
+python gen_model.py
+
+
+Step 2: 생성된 모델을 대상으로 Marabou 검증을 실행합니다.
+
+python test.py
+
+
+
+5. Verification SpecificationInput Constraints: 픽셀 기준값 $0.5$를 중심으로 $\epsilon=0.01$ 범위의 $L_\infty$  제약 조건을 설정합니다. ($0.49 \le x_i \le 0.51$)Output Property: 입력 데이터가 Class 0으로 분류되어야 하는 상황에서, Class 1의 점수가 Class 0보다 높아질 수 있는 지점(output[1] > output[0])이 존재하는지 확인합니다.
+
+
+
+
+6. ResultsResult: SAT Findings: 미세한 노이즈($\epsilon=0.01$)가 추가될 때 모델이 Class 1 또는 다른 클래스로 오분류할 수 있는 취약점을 발견하였습니다.
+
+
+
+
+
+#Acknowledge
+과제 구현 과정에서 OpenAI의 도움을 받았음 밝힙니다.
+
+
 
